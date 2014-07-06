@@ -1,0 +1,46 @@
+@main("Graph Web") {
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Graph Web</a>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/editor.css")">
+
+<form class="form-inline" role="form" method="POST" action="@routes.Graph.create()">
+
+<div class="container-fluid">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="row" style="padding-left:10px; padding-bottom:10px;">
+				<div class="form-group">
+					<label class="sr-only" for="graphNameTxi">Graph Name</label>
+					<input type="text" name="graphName" class="form-control" id="graphNameTxi" placeholder="Graph Name">
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+			<div class="row" id="graph_row">
+				<ul class="nav nav-tabs" role="tablist">
+				  <li id="graphTab" class="active"><a href="#">Graph</a></li>
+				  <li id="csvTab"><a href="#">CSV</a></li>
+				</ul>
+			</div>
+			<div class="row" id="graphArea"></div>
+			<div class="row" id="csvArea">
+				<textarea id="csvTxa" name="graphCsv"></textarea>
+			</div>
+		</div>
+	</div>
+</div>
+
+</form>
+
+<script src="@routes.Assets.at("javascripts/editor.js")" type="text/javascript"></script>
+
+
+}

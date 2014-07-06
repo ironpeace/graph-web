@@ -1,0 +1,21 @@
+path.link {
+  fill: none;
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+circle {
+  fill: #333;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+text {
+  fill: #333;
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+th.infoTitle {
+	text-align: right;
+}
