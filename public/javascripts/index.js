@@ -1,5 +1,17 @@
 $(document).ready(function() {
 
+/**
+	$.ajax({
+		url: "/isJobServerRunning"
+	}).done(function(e) {
+		console.log("JobSever is running");
+		$("a#jobServerLink").addClass("label-success");
+	}).fail(function() {
+		console.log("JobSever is NOT running");
+		$("a#jobServerLink").addClass("label-danger");
+  	});
+**/
+
 	// 桁数指定の四捨五入
 	function myRound(val, precision)
 	{

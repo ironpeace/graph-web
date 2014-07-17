@@ -5,9 +5,11 @@
 # Home page
 GET     /                           controllers.Application.index
 
-POST    /graph/create          		controllers.Graph.create
-GET     /graph/csv/:id          	controllers.Graph.csv(id: Long)
-GET     /graph/info/:id          	controllers.Graph.info(id: Long)
+POST    /graph/create          		controllers.Graphs.create
+GET     /graph/csv/:id          	controllers.Graphs.csv(id: Long)
+GET     /graph/info/:id          	controllers.Graphs.info(id: Long)
+
+GET		/isJobServerRunning			controllers.Graphs.isJobServerRunning
 
 GET     /editor                     controllers.Application.editor
 
