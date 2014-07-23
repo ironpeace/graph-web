@@ -3,15 +3,16 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           		controllers.Application.index
 
-POST    /graph/create          		controllers.Graphs.create
-GET     /graph/csv/:id          	controllers.Graphs.csv(id: Long)
-GET     /graph/info/:id          	controllers.Graphs.info(id: Long)
+POST    /graph/create          				controllers.Graphs.create
+GET     /graph/csv/:id          			controllers.Graphs.csv(id: Long)
+GET     /graph/:command/:id          		controllers.Graphs.callJobServer(id: Long, command:String)
 
-GET		/isJobServerRunning			controllers.Graphs.isJobServerRunning
+GET		/isJobServerRunning					controllers.Graphs.isJobServerRunning
+GET		/registContext						controllers.Graphs.registContext
 
-GET     /editor                     controllers.Application.editor
+GET     /editor                     		controllers.Application.editor
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file               		controllers.Assets.at(path="/public", file)

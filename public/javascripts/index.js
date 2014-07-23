@@ -1,16 +1,23 @@
 $(document).ready(function() {
 
-/**
 	$.ajax({
 		url: "/isJobServerRunning"
 	}).done(function(e) {
 		console.log("JobSever is running");
 		$("a#jobServerLink").addClass("label-success");
+		
+		$.ajax({
+			url: "/registContext"
+		}).done(function(e) {
+			console.log(e);
+		}).fail(function() {
+			console.log(e);
+		});
+
 	}).fail(function() {
 		console.log("JobSever is NOT running");
 		$("a#jobServerLink").addClass("label-danger");
   	});
-**/
 
 	// 桁数指定の四捨五入
 	function myRound(val, precision)
@@ -38,47 +45,129 @@ $(document).ready(function() {
 		drawGraph(graphid);
 
 		$("td.infoVal").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
-		$("div#loaderAreaForPageRank").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
+		$("div#loaderAreaForPageRankDf").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
+		$("div#loaderAreaForPageRankDi").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
+		$("div#loaderAreaForPageRankDt").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
 		$("div#loaderAreaForCC").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
 
 		$.ajax({
-			url: "/graph/info/" + graphid
-		}).done(function(e) {
+			url: "/graph/basic/" + graphid
+		})
+		.always(function(e){
+			$("td.infoVal img").remove();
+		})
+		.fail(function(e){
 			console.log(e);
-			$("img.loader").remove();
+			$("td.infoVal").html("<span class='label label-danger>!</span>");
+		})
+		.done(function(e) {
+			console.log(e);
+			$("#edgesCount").html(e.result.edgesCount);
+			$("#verticesCount").html(e.result.verticesCount);
+			$("#maxInDegrees").html(e.result.maxInDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.result.maxInDegrees.vertex + "</a> )");
+			$("#maxOutDegrees").html(e.result.maxOutDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.result.maxOutDegrees.vertex + "</a> )");
+			$("#maxDegrees").html(e.result.maxDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.result.maxDegrees.vertex + "</a> )");
 
-			$("#edgesCount").html(e.edgesCount);
-			$("#verticesCount").html(e.verticesCount);
-			$("#maxInDegrees").html(e.maxInDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.maxInDegrees.vertex + "</a> )");
-			$("#maxOutDegrees").html(e.maxOutDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.maxOutDegrees.vertex + "</a> )");
-			$("#maxDegrees").html(e.maxDegrees.degrees + "( ID : <a href='#' class='vertexid'>" + e.maxDegrees.vertex + "</a> )");
+			$.ajax({
+				url: "/graph/default-pagerank/" + graphid
+			})
+			.always(function(e){
+				$("div#loaderAreaForPageRankDf img").remove();
+			})
+			.fail(function(e){
+				console.log(e);
+				$("div#loaderAreaForPageRankDf").html("<span class='label label-danger>!</span>");
+			})
+			.done(function(e) {
+				console.log(e);
 
-			for(i=0; i<e.ranks.length; i++){
-				var r = e.ranks[i].rank
-				var v = e.ranks[i].vertex
-				$("#defaultPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
-			}
+				for(i=0; i<e.result.ranks.length; i++){
+					var r = e.result.ranks[i].rank
+					var v = e.result.ranks[i].vertex
+					$("#defaultPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
+				}
 
-			for(i=0; i<e.ranks_di.length; i++){
-				var r = e.ranks_di[i].rank
-				var v = e.ranks_di[i].vertex
-				$("#diPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
-			}
+				$.ajax({
+					url: "/graph/dodopipe-threshold-pagerank/" + graphid
+				})
+				.always(function(e){
+					$("div#loaderAreaForPageRankDt img").remove();
+				})
+				.fail(function(e){
+					console.log(e);
+					$("div#loaderAreaForPageRankDt").html("<span class='label label-danger>!</span>");
+				})
+				.done(function(e) {
+					console.log(e);
 
-			for(i=0; i<e.ranks_dt.length; i++){
-				var r = e.ranks_dt[i].rank
-				var v = e.ranks_dt[i].vertex
-				$("#dtPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
-			}
+					for(i=0; i<e.result.ranks.length; i++){
+						var r = e.result.ranks[i].rank
+						var v = e.result.ranks[i].vertex
+						$("#dtPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
+					}
 
-			for(i=0; i<e.connectedComponents.length; i++){
-				var c = e.connectedComponents[i].cc
-				var v = e.connectedComponents[i].vertex
-				$("#ccList").append("<tr><td>" + c + "</td><td><a href='#' class='vertexidList'>" + v + "</a></td></tr>");
-			}
-			
+					$.ajax({
+						url: "/graph/dodopipe-iteration-pagerank/" + graphid
+					})
+					.always(function(e){
+						$("div#loaderAreaForPageRankDi img").remove();
+					})
+					.fail(function(e){
+						console.log(e);
+						$("div#loaderAreaForPageRankDi").html("<span class='label label-danger>!</span>");
+					})
+					.done(function(e) {
+						console.log(e);
+
+						for(i=0; i<e.result.ranks.length; i++){
+							var r = e.result.ranks[i].rank
+							var v = e.result.ranks[i].vertex
+							$("#diPageRankList").append("<tr><td><a href='#' class='vertexid'>" + v + "</a></td><td>" + myRound(r,5) + "</td></tr>");
+						}
+
+						$.ajax({
+							url: "/graph/connected-components/" + graphid
+						})
+						.always(function(e){
+							$("div#loaderAreaForCC img").remove();
+						})
+						.fail(function(e){
+							console.log(e);
+							$("div#loaderAreaForCC").html("<span class='label label-danger>!</span>");
+						})
+						.done(function(e) {
+							console.log(e);
+
+							for(i=0; i<e.result.connectedComponents.length; i++){
+								var c = e.result.connectedComponents[i].cc
+								var v = e.result.connectedComponents[i].vertex
+								$("#ccList").append("<tr><td>" + c + "</td><td><a href='#' class='vertexidList'>" + v + "</a></td></tr>");
+							}
+
+							$.ajax({
+								url: "/graph/subgraph-neighbors/" + graphid
+							})
+							.always(function(e){
+								//$("div#loaderAreaForCC img").remove();
+							})
+							.fail(function(e){
+								console.log(e);
+								//$("div#loaderAreaForCC").html("<span class='label label-danger>!</span>");
+							})
+							.done(function(e) {
+								console.log(e);
+
+								// for(i=0; i<e.result.connectedComponents.length; i++){
+								// 	var c = e.result.connectedComponents[i].cc
+								// 	var v = e.result.connectedComponents[i].vertex
+								// 	$("#ccList").append("<tr><td>" + c + "</td><td><a href='#' class='vertexidList'>" + v + "</a></td></tr>");
+								// }
+							});
+						});
+					});
+				});
+			});
 		});
-
 	});
 
 	$( document ).on( "click", "a.vertexid", function (e) {
