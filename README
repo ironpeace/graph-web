@@ -1,4 +1,5 @@
-This is your new Play application
-=====================================
-play
-This file will be packaged with your application, when using `play dist`.
+このプロジェクトは グラフ構造データをGUIで作って、CSV形式のデータで取得するためのものです。
+作ったグラフはDBに保存されて、後から参照することができます。
+playで開発されているので、playにパスを通して、play run で稼働させてください。
+
+ご質問等は、 @teppei_tosa にお寄せください。

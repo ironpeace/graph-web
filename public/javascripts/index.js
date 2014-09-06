@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+/**
 	$.ajax({
 		url: "/isJobServerRunning"
 	}).done(function(e) {
@@ -18,6 +19,7 @@ $(document).ready(function() {
 		console.log("JobSever is NOT running");
 		$("a#jobServerLink").addClass("label-danger");
   	});
+**/
 
 	// 桁数指定の四捨五入
 	function myRound(val, precision)
@@ -43,6 +45,8 @@ $(document).ready(function() {
 
 		var graphid = $("#" + e.target.id).attr("graphid");
 		drawGraph(graphid);
+
+		/**
 
 		$("td.infoVal").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
 		$("div#loaderAreaForPageRankDf").html("<img class='loader' src='assets/images/ajax-loader.gif'/>");
@@ -168,6 +172,7 @@ $(document).ready(function() {
 				});
 			});
 		});
+		**/
 	});
 
 	$( document ).on( "click", "a.vertexid", function (e) {

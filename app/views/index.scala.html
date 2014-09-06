@@ -5,12 +5,17 @@
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 	    <div class="navbar-header">
-			<a class="navbar-brand" href="/">Graph Web</a>
+			<a class="navbar-brand" href="/">
+				<img src="@routes.Assets.at("images/graph.png")" width="24" height="24"/>
+				Graph Web
+			</a>
 		</div>
 
+		<!--
     	<p class="navbar-text navbar-right">
     		<a id="jobServerLink" href="http://localhost:8090/" target="_blank" class="label">Job Server</a>
     	</p>
+    	-->
     </div>
 </nav>
 
@@ -37,7 +42,10 @@
 			</table>
 
 		</div>
-		<div class="col-md-5 well" id="graphArea"></div>
+		<div class="col-md-10">
+			<div class="well" id="graphArea"></div>
+		</div>
+		<!--
 		<div class="col-md-5">
 			<h5>Basic Info</h5>
 			<div class="row">
@@ -127,6 +135,7 @@
 			<div id="loaderAreaForCC"></div>
 
 		</div>
+	-->
 	</div>
 </div>
 
